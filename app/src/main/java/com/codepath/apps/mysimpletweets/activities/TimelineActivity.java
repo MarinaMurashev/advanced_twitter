@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TimelineActivity extends ActionBarActivity {
+    private static final int COMPOSE_REQUEST_CODE = 20;
     
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
@@ -79,9 +81,9 @@ public class TimelineActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_compose) {
+            Intent i = new Intent(TimelineActivity.this, ComposeTweetActivity.class);
+            startActivityForResult(i, COMPOSE_REQUEST_CODE);
         }
 
         return super.onOptionsItemSelected(item);
