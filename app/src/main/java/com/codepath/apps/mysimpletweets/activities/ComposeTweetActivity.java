@@ -9,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.clients.TwitterClient;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -22,6 +25,8 @@ import org.json.JSONObject;
 public class ComposeTweetActivity extends ActionBarActivity {
     private EditText etBody;
     private ImageView imProfilePicture;
+    private TextView tvScreenName;
+    private TextView tvUserName;
     private TwitterClient client;
     public static final String TWEET_EXTRA = "tweet";
 
@@ -32,7 +37,28 @@ public class ComposeTweetActivity extends ActionBarActivity {
         
         etBody = (EditText) findViewById(R.id.etBody);
         imProfilePicture = (ImageView) findViewById(R.id.ivProfilePicture);
+        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvUserName = (TextView) findViewById(R.id.tvUserName);
+        
         client = TwitterApplication.getRestClient();
+        fillInUserInfo();
+    }
+
+    private void fillInUserInfo() {
+        client.getCurrentUserInfo(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = User.fromJson(response);
+                Picasso.with(getBaseContext()).load(user.getProfileImageUrl()).into(imProfilePicture);
+                tvScreenName.setText("@" + user.getScreenName());
+                tvUserName.setText(user.getName());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("DEBUG", "getting user info failed");
+            }
+        });
     }
 
 
