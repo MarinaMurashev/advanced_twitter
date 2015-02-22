@@ -1,15 +1,29 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.TwitterApplication;
+import com.codepath.apps.mysimpletweets.clients.TwitterClient;
+import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 public class ComposeTweetActivity extends ActionBarActivity {
-    EditText etBody;
+    private EditText etBody;
+    private ImageView imProfilePicture;
+    private TwitterClient client;
+    public static final String TWEET_EXTRA = "tweet";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +31,8 @@ public class ComposeTweetActivity extends ActionBarActivity {
         setContentView(R.layout.activity_compose_tweet);
         
         etBody = (EditText) findViewById(R.id.etBody);
+        imProfilePicture = (ImageView) findViewById(R.id.ivProfilePicture);
+        client = TwitterApplication.getRestClient();
     }
 
 
@@ -40,5 +56,24 @@ public class ComposeTweetActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSubmitTweet(View view) {
+        client.postTweet(etBody.getText().toString(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Tweet tweet = Tweet.fromJSON(response);
+
+                Intent i = new Intent();
+                i.putExtra(TWEET_EXTRA, tweet);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+            }
+        });
     }
 }

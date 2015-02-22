@@ -4,14 +4,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tweet {
+public class Tweet implements Serializable {
+    private static final long serialVersionUID = 5177222050535318633L;
+    
     private String body;
     private long uid;
     private User user;
     private String createdAt;
 
+    
     public User getUser() {
         return user;
     }
@@ -19,6 +23,7 @@ public class Tweet {
     public String getBody() {
         return body;
     }
+    
     public long getUid() {
         return uid;
     }

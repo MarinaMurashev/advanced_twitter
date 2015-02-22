@@ -37,14 +37,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:hint="@string/whats_happening"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="@string/submit"
         android:id="@+id/bSubmit"
         android:layout_below="@+id/etBody"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp" />
+        android:layout_marginTop="84dp"
+        android:onClick="onSubmitTweet"/>
 </RelativeLayout>

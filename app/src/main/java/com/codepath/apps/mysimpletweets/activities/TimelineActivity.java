@@ -66,6 +66,16 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == COMPOSE_REQUEST_CODE) {
+            Tweet tweet = (Tweet) data.getSerializableExtra(ComposeTweetActivity.TWEET_EXTRA);
+
+            aTweets.insert(tweet, 0);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

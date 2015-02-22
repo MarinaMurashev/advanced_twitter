@@ -7,5 +7,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Compose Tweet</string>
     <string name="title_activity_compose_tweet">ComposeTweetActivity</string>
+    <string name="submit">Tweet</string>
+    <string name="whats_happening">What\'s happening?</string>
 
 </resources>
