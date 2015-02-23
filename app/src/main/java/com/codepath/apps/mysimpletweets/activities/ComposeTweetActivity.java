@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -50,8 +51,12 @@ public class ComposeTweetActivity extends ActionBarActivity {
         
         client = TwitterApplication.getRestClient();
         fillInUserInfo();
+        enforceCharacterLimit();
+    }
+    
+    private void enforceCharacterLimit(){
         tvCharsRemaining.setText(Integer.toString(MAX_CHARACTERS));
-
+        
         etBody.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -66,11 +71,14 @@ public class ComposeTweetActivity extends ActionBarActivity {
                 if(remainingCharacters >= 0) {
                     bSubmit.setEnabled(true);
                     tvCharsRemaining.setText(Integer.toString(remainingCharacters));
+                    tvCharsRemaining.setTextColor(Color.parseColor("#000000"));
                 } else {
+                    tvCharsRemaining.setText(Integer.toString(remainingCharacters));
+                    tvCharsRemaining.setTextColor(Color.parseColor("#A00000"));
                     bSubmit.setEnabled(false);
                 }
             }
-        });
+        });  
     }
 
     private void fillInUserInfo() {

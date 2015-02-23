@@ -57,5 +57,6 @@
         android:id="@+id/tvCharsRemaining"
         android:layout_below="@+id/etBody"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#000000"/>
 </RelativeLayout>
