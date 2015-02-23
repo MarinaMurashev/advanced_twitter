@@ -55,19 +55,24 @@ public class TimelineActivity extends ActionBarActivity {
             }
         });
 
+        configureSwipeRefresh();
+
+    }
+
+    private void configureSwipeRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 populateTimeline(Long.MAX_VALUE);
             }
         });
-        // Configure the refreshing colors
+
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }
-    
+
     private void setActionBarIcon(){
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_action_name2);
