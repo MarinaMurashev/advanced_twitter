@@ -21,6 +21,13 @@ import java.util.Locale;
 
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
+    private static class ViewHolder {
+        TextView tvUserName;
+        TextView tvBody;
+        TextView tvRelativeTime;
+        ImageView ivProfileImage;
+    }
+
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
         super(context, 0, tweets);
     }
@@ -30,20 +37,29 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         Tweet tweet = getItem(position);
         User user = tweet.getUser();
         
+        ViewHolder viewHolder;
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_tweet, parent, false);
+            
+            viewHolder.ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+            viewHolder.tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+            viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
+            viewHolder.tvRelativeTime = (TextView) convertView.findViewById(R.id.tvRelativeTime);
+            
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
-        TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-        TextView tvRelativeTime = (TextView) convertView.findViewById(R.id.tvRelativeTime);
         
-        tvUserName.setText(user.getScreenName());
-        tvBody.setText(tweet.getBody());
-        tvRelativeTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
-        ivProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(user.getProfileImageUrl()).into(ivProfileImage);
+        
+        viewHolder.tvUserName.setText("@" + user.getScreenName());
+        viewHolder.tvBody.setText(tweet.getBody());
+        viewHolder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+        viewHolder.ivProfileImage.setImageResource(android.R.color.transparent);
+        Picasso.with(getContext()).load(user.getProfileImageUrl()).into(viewHolder.ivProfileImage);
         
         return convertView;
     }

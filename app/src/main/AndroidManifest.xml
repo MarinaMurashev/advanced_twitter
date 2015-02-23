@@ -53,7 +53,8 @@
         <activity
             android:name=".activities.ComposeTweetActivity"
             android:label="@string/title_activity_compose_tweet"
-            android:parentActivityName=".activities.TimelineActivity" >
+            android:parentActivityName=".activities.TimelineActivity"
+            android:icon="@drawable/ic_action_name2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codepath.apps.mysimpletweets.activities.TimelineActivity" />
