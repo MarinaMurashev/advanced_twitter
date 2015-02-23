@@ -39,6 +39,7 @@ public class ComposeTweetActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_tweet);
+        setActionBarIcon();
         
         etBody = (EditText) findViewById(R.id.etBody);
         imProfilePicture = (ImageView) findViewById(R.id.ivProfilePicture);
@@ -50,6 +51,12 @@ public class ComposeTweetActivity extends ActionBarActivity {
         client = TwitterApplication.getRestClient();
         fillInUserInfo();
         enforceCharacterLimit();
+    }
+
+    private void setActionBarIcon(){
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_action_name2);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
     
     private void enforceCharacterLimit(){
