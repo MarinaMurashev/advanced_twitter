@@ -3,10 +3,13 @@ package com.codepath.apps.mysimpletweets.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,8 +30,11 @@ public class ComposeTweetActivity extends ActionBarActivity {
     private ImageView imProfilePicture;
     private TextView tvScreenName;
     private TextView tvUserName;
+    private TextView tvCharsRemaining;
+    private Button bSubmit;
     private TwitterClient client;
     public static final String TWEET_EXTRA = "tweet";
+    private static final int MAX_CHARACTERS = 140;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +45,32 @@ public class ComposeTweetActivity extends ActionBarActivity {
         imProfilePicture = (ImageView) findViewById(R.id.ivProfilePicture);
         tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         tvUserName = (TextView) findViewById(R.id.tvUserName);
+        tvCharsRemaining = (TextView) findViewById(R.id.tvCharsRemaining);
+        bSubmit = (Button) findViewById(R.id.bSubmit);
         
         client = TwitterApplication.getRestClient();
         fillInUserInfo();
+        tvCharsRemaining.setText(Integer.toString(MAX_CHARACTERS));
+
+        etBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int remainingCharacters = MAX_CHARACTERS - s.length();
+
+                if(remainingCharacters >= 0) {
+                    bSubmit.setEnabled(true);
+                    tvCharsRemaining.setText(Integer.toString(remainingCharacters));
+                } else {
+                    bSubmit.setEnabled(false);
+                }
+            }
+        });
     }
 
     private void fillInUserInfo() {
@@ -102,4 +131,6 @@ public class ComposeTweetActivity extends ActionBarActivity {
             }
         });
     }
+    
+    
 }
