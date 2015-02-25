@@ -6,51 +6,46 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
-import com.codepath.apps.mysimpletweets.adapters.TweetsArrayAdapter;
 import com.codepath.apps.mysimpletweets.clients.TwitterClient;
+import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.codepath.apps.mysimpletweets.utility.EndlessScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class TimelineActivity extends ActionBarActivity {
     private static final int COMPOSE_REQUEST_CODE = 20;
     
+    private TweetsListFragment fragmentTweetsList;
     private TwitterClient client;
-    private ArrayList<Tweet> tweets;
-    private TweetsArrayAdapter aTweets;
-    private ListView lvTweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionBarIcon();
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
-        tweets = new ArrayList<>();
-        aTweets = new TweetsArrayAdapter(this, tweets);
-        lvTweets.setAdapter(aTweets);
+
         
         client = TwitterApplication.getRestClient();
         populateTimeline(Long.MAX_VALUE);
+        
+        if(savedInstanceState == null) {
+            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+        }
 
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-               Tweet last_tweet =  tweets.get(tweets.size() - 1);
-               long last_tweet_id = last_tweet.getUid();
-               populateTimeline(last_tweet_id);
-            }
-        });
+//        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount) {
+//               Tweet last_tweet =  tweets.get(tweets.size() - 1);
+//               long last_tweet_id = last_tweet.getUid();
+//               populateTimeline(last_tweet_id);
+//            }
+//        });
     }
 
     private void setActionBarIcon(){
@@ -63,10 +58,10 @@ public class TimelineActivity extends ActionBarActivity {
         client.getHomeTimeline(max_id, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                if(max_id == Long.MAX_VALUE){
-                    aTweets.clear();
-                }
-                aTweets.addAll(Tweet.fromJsonArray(json));
+//                if(max_id == Long.MAX_VALUE){
+//                    aTweets.clear();
+//                }
+                fragmentTweetsList.addAll(Tweet.fromJsonArray(json));
             }
 
             @Override
@@ -82,7 +77,7 @@ public class TimelineActivity extends ActionBarActivity {
         if (resultCode == RESULT_OK && requestCode == COMPOSE_REQUEST_CODE) {
             Tweet tweet = (Tweet) data.getSerializableExtra(ComposeTweetActivity.TWEET_EXTRA);
 
-            aTweets.insert(tweet, 0);
+//            aTweets.insert(tweet, 0);
         }
     }
 
