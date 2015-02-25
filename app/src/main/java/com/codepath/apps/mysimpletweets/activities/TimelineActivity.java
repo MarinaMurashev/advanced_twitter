@@ -2,7 +2,6 @@ package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -30,14 +29,12 @@ public class TimelineActivity extends ActionBarActivity {
     private ArrayList<Tweet> tweets;
     private TweetsArrayAdapter aTweets;
     private ListView lvTweets;
-    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionBarIcon();
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         tweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(this, tweets);
@@ -54,23 +51,6 @@ public class TimelineActivity extends ActionBarActivity {
                populateTimeline(last_tweet_id);
             }
         });
-
-        configureSwipeRefresh();
-
-    }
-
-    private void configureSwipeRefresh() {
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                populateTimeline(Long.MAX_VALUE);
-            }
-        });
-
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
     }
 
     private void setActionBarIcon(){
@@ -87,7 +67,6 @@ public class TimelineActivity extends ActionBarActivity {
                     aTweets.clear();
                 }
                 aTweets.addAll(Tweet.fromJsonArray(json));
-                swipeContainer.setRefreshing(false);
             }
 
             @Override

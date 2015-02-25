@@ -3,22 +3,17 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.mysimpletweets.activities.TimelineActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    
-    <ListView
+
+    <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvTweets"
+        android:name="com.codepath.apps.mysimpletweets.fragments.TweetsListFragment"
+        android:id="@+id/fragment"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        tools:layout="@layout/fragment_tweets_list"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
