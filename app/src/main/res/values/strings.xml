@@ -9,5 +9,6 @@
     <string name="title_activity_compose_tweet">Compose Tweet</string>
     <string name="submit">Tweet</string>
     <string name="whats_happening">What\'s happening?</string>
+    <string name="title_activity_profile">Profile</string>
 
 </resources>

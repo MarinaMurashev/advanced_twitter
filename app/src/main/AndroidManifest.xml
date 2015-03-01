@@ -52,12 +52,16 @@
         </activity>
         <activity
             android:name=".activities.ComposeTweetActivity"
+            android:icon="@drawable/ic_action_name2"
             android:label="@string/title_activity_compose_tweet"
-            android:parentActivityName=".activities.TimelineActivity"
-            android:icon="@drawable/ic_action_name2">
+            android:parentActivityName=".activities.TimelineActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codepath.apps.mysimpletweets.activities.TimelineActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 

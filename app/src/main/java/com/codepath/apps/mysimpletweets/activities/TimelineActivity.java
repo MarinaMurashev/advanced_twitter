@@ -80,7 +80,12 @@ public class TimelineActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
+    public void onProfileView(MenuItem item) {
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = { "Home", "Mentions" };
