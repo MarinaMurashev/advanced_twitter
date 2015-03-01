@@ -43,7 +43,7 @@ public class ComposeTweetActivity extends ActionBarActivity {
         
         etBody = (EditText) findViewById(R.id.etBody);
         imProfilePicture = (ImageView) findViewById(R.id.ivProfilePicture);
-        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvScreenName = (TextView) findViewById(R.id.tvTagline);
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         tvCharsRemaining = (TextView) findViewById(R.id.tvCharsRemaining);
         bSubmit = (Button) findViewById(R.id.bSubmit);
