@@ -1,11 +1,13 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -13,6 +15,16 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        
+        String screenName = getIntent().getStringExtra("screenName");
+        
+        if(savedInstanceState == null) {
+            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flContainer, fragmentUserTimeline);
+            ft.commit();
+        }
     }
 
 
