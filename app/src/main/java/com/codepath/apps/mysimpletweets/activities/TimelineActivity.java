@@ -3,40 +3,21 @@ package com.codepath.apps.mysimpletweets.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.mysimpletweets.R;
-import com.codepath.apps.mysimpletweets.TwitterApplication;
-import com.codepath.apps.mysimpletweets.clients.TwitterClient;
-import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class TimelineActivity extends ActionBarActivity {
     private static final int COMPOSE_REQUEST_CODE = 20;
-    
-    private TweetsListFragment fragmentTweetsList;
-    private TwitterClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionBarIcon();
-
-        
-        client = TwitterApplication.getRestClient();
-        populateTimeline(Long.MAX_VALUE);
-        
-        if(savedInstanceState == null) {
-            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-        }
 
 //        lvTweets.setOnScrollListener(new EndlessScrollListener() {
 //            @Override
@@ -52,23 +33,6 @@ public class TimelineActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_action_name2);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-    }
-
-    private void populateTimeline(final long max_id) {
-        client.getHomeTimeline(max_id, new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-//                if(max_id == Long.MAX_VALUE){
-//                    aTweets.clear();
-//                }
-                fragmentTweetsList.addAll(Tweet.fromJsonArray(json));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
-            }
-        });
     }
 
     @Override
