@@ -42,7 +42,8 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvFollowers"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:layout_below="@+id/tvTagline"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,6 +51,8 @@
         android:text="New Text"
         android:id="@+id/tvFollowing"
         android:textColor="#000000"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/tvFollowers"
+        android:layout_below="@+id/tvTagline"/>
 
 </RelativeLayout>
