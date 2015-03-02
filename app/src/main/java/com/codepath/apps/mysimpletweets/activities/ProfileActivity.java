@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.clients.TwitterClient;
+import com.codepath.apps.mysimpletweets.fragments.UserHeaderFragment;
 import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,10 +43,17 @@ public class ProfileActivity extends ActionBarActivity {
         
         if(savedInstanceState == null) {
             UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
+            UserHeaderFragment fragmentUserHeader = UserHeaderFragment.newInstance(screenName);
 
+            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+            ft2.replace(R.id.flHeaderContainer, fragmentUserHeader);
+            ft2.commit();
+            
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, fragmentUserTimeline);
             ft.commit();
+
+           
         }
     }
 
