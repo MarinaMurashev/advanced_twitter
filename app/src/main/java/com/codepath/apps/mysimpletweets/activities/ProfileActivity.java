@@ -11,11 +11,9 @@ import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.clients.TwitterClient;
 import com.codepath.apps.mysimpletweets.fragments.UserHeaderFragment;
 import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
-import com.codepath.apps.mysimpletweets.models.User;
 
 public class ProfileActivity extends ActionBarActivity {
     TwitterClient client;
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +27,11 @@ public class ProfileActivity extends ActionBarActivity {
         if(savedInstanceState == null) {
             UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
             UserHeaderFragment fragmentUserHeader = UserHeaderFragment.newInstance(screenName);
-
-            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-            ft2.replace(R.id.flHeaderContainer, fragmentUserHeader);
-            ft2.commit();
             
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, fragmentUserTimeline);
+            ft.replace(R.id.flHeaderContainer, fragmentUserHeader);
             ft.commit();
-
-           
         }
     }
 
