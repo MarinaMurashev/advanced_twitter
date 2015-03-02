@@ -38,9 +38,6 @@ public class UserTimelineFragment extends TweetsListFragment{
         client.getUserTimeline(screenName, max_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-//                if(max_id == Long.MAX_VALUE){
-//                    aTweets.clear();
-//                }
                 addAll(Tweet.fromJsonArray(json));
             }
 
