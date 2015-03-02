@@ -7,14 +7,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 public class TimelineActivity extends ActionBarActivity {
     private static final int COMPOSE_REQUEST_CODE = 20;
@@ -73,8 +80,21 @@ public class TimelineActivity extends ActionBarActivity {
     }
 
     public void onProfileView(MenuItem item) {
-        Intent i = new Intent(this, ProfileActivity.class);
-        startActivity(i);
+        TwitterApplication.getRestClient().getCurrentUserInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = User.fromJson(response);
+                Intent i = new Intent(getBaseContext(), ProfileActivity.class);
+                i.putExtra("screenName", user.getScreenName());
+                startActivity(i);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("DEBUG", "getting user info failed");
+            }
+        });
+
     }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
