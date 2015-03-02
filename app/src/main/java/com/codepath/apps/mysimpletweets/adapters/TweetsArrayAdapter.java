@@ -2,6 +2,7 @@ package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         Tweet tweet = getItem(position);
         User user = tweet.getUser();
         
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -60,6 +61,14 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         viewHolder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
         viewHolder.ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(user.getProfileImageUrl()).into(viewHolder.ivProfileImage);
+        viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                String userScreenName = viewHolder.tvUserName.getText().toString();
+                Log.d("DEBUG", userScreenName);
+            }
+        });
         
         return convertView;
     }

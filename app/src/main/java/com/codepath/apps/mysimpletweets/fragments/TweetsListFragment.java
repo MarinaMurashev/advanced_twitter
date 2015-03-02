@@ -11,24 +11,37 @@ import android.widget.ListView;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.TweetsArrayAdapter;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.utility.EndlessScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetsListFragment extends Fragment {
-    private ArrayList<Tweet> tweets;
+public abstract class TweetsListFragment extends Fragment{
+    protected ArrayList<Tweet> tweets;
     private TweetsArrayAdapter aTweets;
-    private ListView lvTweets;
+    protected ListView lvTweets;
     
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
         lvTweets.setAdapter(aTweets);
+
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Tweet last_tweet =  tweets.get(tweets.size() - 1);
+                long last_tweet_id = last_tweet.getUid();
+                populateTimeline(last_tweet_id);
+
+            }
+        });
         
         return v;
     }
 
+    protected abstract void populateTimeline(long maxId);
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

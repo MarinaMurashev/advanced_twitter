@@ -31,15 +31,6 @@ public class TimelineActivity extends ActionBarActivity {
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(viewPager);
-
-//        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount) {
-//               Tweet last_tweet =  tweets.get(tweets.size() - 1);
-//               long last_tweet_id = last_tweet.getUid();
-//               populateTimeline(last_tweet_id);
-//            }
-//        });
     }
 
     private void setActionBarIcon(){

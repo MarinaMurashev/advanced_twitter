@@ -22,9 +22,12 @@ public class HomeTimelineFragment extends TweetsListFragment {
         
         client = TwitterApplication.getRestClient();
         populateTimeline(Long.MAX_VALUE);
+        
     }
+    
 
-    private void populateTimeline(final long max_id) {
+
+    public void populateTimeline(long max_id) {
         client.getHomeTimeline(max_id, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
