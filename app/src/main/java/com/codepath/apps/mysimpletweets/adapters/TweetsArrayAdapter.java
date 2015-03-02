@@ -1,8 +1,8 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.activities.ProfileActivity;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.squareup.picasso.Picasso;
@@ -66,7 +67,10 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
             @Override
             public void onClick(View v) {
                 String userScreenName = viewHolder.tvUserName.getText().toString();
-                Log.d("DEBUG", userScreenName);
+                
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("screenName", userScreenName);
+                getContext().startActivity(i);
             }
         });
         
